@@ -27,12 +27,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.nearby.R
 import com.example.nearby.data.model.Market
-import com.example.nearby.data.model.Rule
 import com.example.nearby.ui.theme.Gray100
 import com.example.nearby.ui.theme.Gray200
-
-import com.example.nearby.R
 import com.example.nearby.ui.theme.Gray400
 import com.example.nearby.ui.theme.Gray500
 import com.example.nearby.ui.theme.RedBase
