@@ -16,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -33,7 +34,7 @@ import com.example.nearby.ui.components.market_details.NearbyMarketDetailsRules
 import com.example.nearby.ui.theme.Typography
 
 @Composable
-fun MarketDetailsScreen(modifier: Modifier = Modifier, market: Market) {
+fun MarketDetailsScreen(modifier: Modifier = Modifier, market: Market, onNavigateBack: () -> Unit = {}) {
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -83,12 +84,12 @@ fun MarketDetailsScreen(modifier: Modifier = Modifier, market: Market) {
                         modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp)
                     )
 
-                    if(market.rules.isNotEmpty()) {
-                        NearbyMarketDetailsRules(rules = market.rules)
-                        HorizontalDivider(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp)
-                        )
-                    }
+//                    if(market.rules.isNotEmpty()) {
+//                        NearbyMarketDetailsRules(rules = market.rules)
+//                        HorizontalDivider(
+//                            modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp)
+//                        )
+//                    }
 
                     NearbyMarketDetailsCoupons(coupons = listOf("10% de desconto", "1 cerveja grátis"))
                 }
@@ -101,6 +102,14 @@ fun MarketDetailsScreen(modifier: Modifier = Modifier, market: Market) {
                 )
             }
         }
+
+        NearbyButton(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(24.dp),
+            iconRes = R.drawable.ic_arrow_left,
+            onClick = onNavigateBack
+        )
     }
 
 }

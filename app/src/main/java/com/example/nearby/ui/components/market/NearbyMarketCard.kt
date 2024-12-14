@@ -100,24 +100,3 @@ fun NearbyMarketCard(
         }
     }
 }
-
-@Preview
-@Composable
-private fun NearbyMarketCardPreview() {
-    NearbyMarketCard(
-        modifier = Modifier.fillMaxWidth(),
-        market = Market(
-            id = "1",
-            categoryId = "50",
-            name = "Mercado 1",
-            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent hendrerit tortor eu lacinia tincidunt. Etiam ullamcorper massa vitae urna tincidunt venenatis. Nulla facilisi. Nullam lacinia urna magna, ac vestibulum enim tempus eu. Proin tempor rutrum mollis. Phasellus scelerisque ex arcu, eu sodales lacus feugiat nec.",
-            coupons = 10,
-            rules = emptyList(),
-            latitude = -23.5505199,
-            longitude = -46.6333094,
-            address = "Rua do mercado 1",
-            phone = "(11) 99999-9999",
-            cover = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM5kt9cWqI1xeKY9K3eRPq7tDbxKPd05cdiQ&s",
-        ),
-    ) {}
-}
