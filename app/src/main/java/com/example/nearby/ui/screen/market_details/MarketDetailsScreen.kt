@@ -1,4 +1,4 @@
-package com.example.nearby.ui.screen
+package com.example.nearby.ui.screen.market_details
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
