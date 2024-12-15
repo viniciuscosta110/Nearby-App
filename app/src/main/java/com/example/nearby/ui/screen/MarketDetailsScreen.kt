@@ -1,6 +1,5 @@
 package com.example.nearby.ui.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,16 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.example.nearby.R
 import com.example.nearby.data.model.Market
 import com.example.nearby.data.model.mock.mockMarkets
 import com.example.nearby.ui.components.button.NearbyButton
 import com.example.nearby.ui.components.market_details.NearbyMarketDetailsCoupons
 import com.example.nearby.ui.components.market_details.NearbyMarketDetailsInfos
-import com.example.nearby.ui.components.market_details.NearbyMarketDetailsRules
 import com.example.nearby.ui.theme.Typography
 
 @Composable
@@ -38,23 +36,22 @@ fun MarketDetailsScreen(modifier: Modifier = Modifier, market: Market, onNavigat
     Box(
         modifier = modifier.fillMaxSize()
     ) {
-        Image(
+        AsyncImage(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.3f),
             contentDescription = "Imagem do local",
             contentScale = ContentScale.Crop,
-            painter = painterResource(id = R.drawable.img_burger)
-//            model = market.cover
+            model = market.cover
         )
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
                 .fillMaxWidth()
                 .fillMaxHeight(0.75f)
-                .align(androidx.compose.ui.Alignment.BottomCenter)
+                .align(Alignment.BottomCenter)
                 .background(Color.White),
-            contentAlignment = androidx.compose.ui.Alignment.BottomCenter
+            contentAlignment = Alignment.BottomCenter
         ) {
             Column(
                 modifier = Modifier

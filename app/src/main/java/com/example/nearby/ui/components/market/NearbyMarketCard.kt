@@ -1,6 +1,5 @@
 package com.example.nearby.ui.components.market
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -24,9 +23,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.example.nearby.R
 import com.example.nearby.data.model.Market
 import com.example.nearby.ui.theme.Gray100
@@ -57,7 +56,7 @@ fun NearbyMarketCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .clip(RoundedCornerShape(12.dp))
                     .fillMaxWidth(0.3f)
@@ -65,8 +64,8 @@ fun NearbyMarketCard(
                         IntrinsicSize.Min
                     )
                     .aspectRatio(ratio = 1f, matchHeightConstraintsFirst = true),
+                model = market.cover,
                 contentScale = ContentScale.Crop,
-                painter = painterResource(R.drawable.ic_bakery),
                 contentDescription = "Imagem do estabelescimento",
             )
             Column {
