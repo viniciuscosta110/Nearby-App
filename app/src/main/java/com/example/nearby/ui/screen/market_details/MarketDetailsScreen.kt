@@ -1,5 +1,6 @@
 package com.example.nearby.ui.screen.market_details
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,14 +27,28 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.nearby.R
 import com.example.nearby.data.model.Market
+import com.example.nearby.data.model.MarketDetails
 import com.example.nearby.data.model.mock.mockMarkets
 import com.example.nearby.ui.components.button.NearbyButton
 import com.example.nearby.ui.components.market_details.NearbyMarketDetailsCoupons
 import com.example.nearby.ui.components.market_details.NearbyMarketDetailsInfos
+import com.example.nearby.ui.components.market_details.NearbyMarketDetailsRules
+import com.example.nearby.ui.screen.home.HomeUiState
 import com.example.nearby.ui.theme.Typography
 
 @Composable
-fun MarketDetailsScreen(modifier: Modifier = Modifier, market: Market, onNavigateBack: () -> Unit = {}) {
+fun MarketDetailsScreen(
+    modifier: Modifier = Modifier,
+    market: Market,
+    onNavigateBack: () -> Unit = {},
+    uiState: MarketDetailsUiState,
+    onEvent: (MarketDetailsUiEvent) -> Unit,
+    onNavigateToQRCodeScanner: () -> Unit,
+) {
+    Log.d("UiState", "State: ${uiState}")
+    LaunchedEffect(true) {
+        onEvent(MarketDetailsUiEvent.OnFetchRules(market.id))
+    }
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -78,24 +94,31 @@ fun MarketDetailsScreen(modifier: Modifier = Modifier, market: Market, onNavigat
 
                     NearbyMarketDetailsInfos(market = market)
                     HorizontalDivider(
-                        modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 24.dp)
                     )
 
-//                    if(market.rules.isNotEmpty()) {
-//                        NearbyMarketDetailsRules(rules = market.rules)
-//                        HorizontalDivider(
-//                            modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp)
-//                        )
-//                    }
+                    if(!uiState.rules.isNullOrEmpty()) {
+                        NearbyMarketDetailsRules(rules = uiState.rules)
+                        HorizontalDivider(
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp)
+                        )
+                    }
 
-                    NearbyMarketDetailsCoupons(coupons = listOf("10% de desconto", "1 cerveja grátis"))
+                    if(!uiState.coupon.isNullOrEmpty()) {
+                        Log.d("MarketDetailsScreen", "Coupon: ${uiState.coupon}")
+                        NearbyMarketDetailsCoupons(
+                            coupons = listOf(uiState.coupon),
+                        )
+                    }
                 }
                 NearbyButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 24.dp),
                     text = "Ler QR Code",
-                    onClick = {}
+                    onClick = onNavigateToQRCodeScanner
                 )
             }
         }
@@ -108,11 +131,16 @@ fun MarketDetailsScreen(modifier: Modifier = Modifier, market: Market, onNavigat
             onClick = onNavigateBack
         )
     }
-
 }
 
 @Preview
 @Composable
 private fun MarketDetailsScreenPreview() {
-    MarketDetailsScreen(market = mockMarkets.first())
+    MarketDetailsScreen(
+        market = mockMarkets.first(),
+        uiState = MarketDetailsUiState(),
+        onEvent = {},
+        onNavigateBack = {},
+        onNavigateToQRCodeScanner = {}
+    )
 }

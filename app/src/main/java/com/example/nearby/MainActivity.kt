@@ -1,6 +1,7 @@
 package com.example.nearby
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -22,6 +23,11 @@ import com.example.nearby.ui.route.Welcome
 import com.example.nearby.ui.theme.NearbyTheme
 
 import androidx.compose.runtime.getValue
+import com.example.nearby.ui.route.QRCodeScanner
+import com.example.nearby.ui.screen.market_details.MarketDetailsUiEvent
+import com.example.nearby.ui.screen.market_details.MarketDetailsViewModel
+import com.example.nearby.ui.screen.qrcode_scanner.QRCodeScannerScreen
+import kotlin.math.log
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +38,9 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val homeViewModel by viewModels<HomeViewModel>()
                 val homeUiState by homeViewModel.uiState.collectAsStateWithLifecycle()
+
+                val marketDetailsViewModel by viewModels<MarketDetailsViewModel>()
+                val marketDetailsUiState by marketDetailsViewModel.uiState.collectAsStateWithLifecycle()
 
                 NavHost(
                     navController = navController,
@@ -68,8 +77,27 @@ class MainActivity : ComponentActivity() {
                             market = selectedMarket,
                             onNavigateBack = {
                                 navController.popBackStack()
+                            },
+                            uiState = marketDetailsUiState,
+                            onEvent = marketDetailsViewModel::onEvent,
+                            onNavigateToQRCodeScanner = {
+                                navController.navigate(QRCodeScanner)
                             }
                         )
+                    }
+
+                    composable<QRCodeScanner> {
+                        QRCodeScannerScreen(onCompletedScan = { qrCodeContent ->
+                            if (qrCodeContent.isNotEmpty()) {
+                                marketDetailsViewModel.onEvent(
+                                    MarketDetailsUiEvent.OnFetchCoupon(
+                                        qrCodeContent = qrCodeContent
+                                    )
+                                )
+                                navController.popBackStack()
+                            }
+                            Log.d("QRCodeScanner", "QRCode content: $qrCodeContent")
+                        })
                     }
                 }
             }

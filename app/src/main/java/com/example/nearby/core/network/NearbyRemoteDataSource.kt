@@ -7,12 +7,14 @@ import com.example.nearby.data.model.Market
 import com.example.nearby.data.model.MarketDetails
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.request.patch
 
 object NearbyRemoteDataSource {
     private const val LOCAL_HOST_EMULATOR_BASE_URL = "http://10.0.2.2:3333"
+    private const val LOCAL_HOST_PHYSICAL_BASE_URL = "http://192.168.0.5:3333"
 
 
-    private const val BASE_URL = LOCAL_HOST_EMULATOR_BASE_URL
+    private const val BASE_URL = LOCAL_HOST_PHYSICAL_BASE_URL
 
     suspend fun getCategories(): Result<List<Category>> = try {
         val categories= httpClientAndroid.get("$BASE_URL/categories").body<List<Category>>()
@@ -39,7 +41,7 @@ object NearbyRemoteDataSource {
     }
 
     suspend fun patchCoupon(marketId: String) : Result<Coupon> = try {
-        val coupon = httpClientAndroid.get("$BASE_URL/coupons/$marketId").body<Coupon>()
+        val coupon = httpClientAndroid.patch("$BASE_URL/coupons/$marketId").body<Coupon>()
 
         Result.success(coupon)
     } catch (e: Exception) {
