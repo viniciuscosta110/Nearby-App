@@ -1,4 +1,8 @@
-# Nearby App 
+
+<h1 align="center">
+  Nearby App
+  <img alt="Nearby Icon" title="Nearby" src="/img/logo-icon.SVG" width="250px" />
+</h1>
 
 Nearby App developed during NLW Pocket promoted by Rocketseat
 
