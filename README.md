@@ -38,5 +38,7 @@ Main Technologies Used:
 - [Kotlin Serialization](https://kotlinlang.org/docs/serialization.html): Native serialization library from JetBrains, simplifying data parsing and transformation.
 
 # 🔖 Layout
+<img src="img/pages.png"/>
+
 You can also check the [Figma project](https://www.figma.com/community/file/1448070647757721748/nlw-pocket-mobile-nearby) to see more about it.
 
